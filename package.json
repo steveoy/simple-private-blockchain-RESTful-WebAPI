@@ -1,7 +1,7 @@
 {
-  "name": "private-blockchain",
+  "name": "simple-private-blockchain-restful-webapi",
   "version": "1.0.0",
-  "description": "simple blockchain with leveldb",
+  "description": "interfacing blockchain with Express API",
   "main": "simpleChain.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
