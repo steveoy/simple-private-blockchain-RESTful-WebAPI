@@ -2,7 +2,7 @@
   "name": "simple-private-blockchain-restful-webapi",
   "version": "1.0.0",
   "description": "interfacing blockchain with Express API",
-  "main": "simpleChain.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "crypto-js": "^3.1.9-1",
+    "express": "^4.16.3",
     "level": "^4.0.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.6"
   }
 }

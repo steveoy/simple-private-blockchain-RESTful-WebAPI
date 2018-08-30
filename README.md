@@ -1,4 +1,10 @@
 
+## Express RESTful web API for private blockchain. 
+The API project include two endpoints:
+
+Get block
+
+Post block
 
 ## For Testing Please Follow Below Steps, please do first "npm install"
 
