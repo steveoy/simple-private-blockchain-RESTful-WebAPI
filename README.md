@@ -1,5 +1,6 @@
 
-## Express RESTful web API for private blockchain. 
+## RESTful web API for private blockchain. 
+Node.js framework: Express.js
 The API project file app.js include two endpoints:
 
 Get block
