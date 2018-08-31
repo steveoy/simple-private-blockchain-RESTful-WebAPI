@@ -29,13 +29,17 @@ class Blockchain {
     this.blockHeight = -1;
 
     let $this = this;
-    this.getBlockHeight().then(function (result) {
-      if (result == -1) {
-        $this.addBlock(new Block("First block in the chain - Genesis block"));
-        console.log("Genesis block created with height = " + $this.blockHeight);
+    this.getBlockHeight().then(function (height) {
+      if (height == -1) {
+        $this.addBlock(new Block("First block in the chain - Genesis block")).then(result => {
+          if (result == "success")
+            console.log("Genesis block created with height = " + $this.blockHeight);
+          else
+            console.log("Something went wrong while creating genesis block!");
+        });
       }
       else
-        $this.blockHeight = result; //caching block height result in blockHeight
+        $this.blockHeight = height; //caching block height result in blockHeight
     });
   }
 
@@ -65,24 +69,29 @@ class Blockchain {
   addBlock(newBlock) {
     if (this.blockHeight > -1) {
       let $this = this;
-      $this.getBlock($this.blockHeight)
-        .then(function (currentBlock) {
-          currentBlock = JSON.parse(currentBlock);
-          newBlock.previousBlockHash = currentBlock.hash;
-          newBlock.time = new Date().getTime().toString().slice(0, -3);
-          newBlock.height = ++$this.blockHeight;
-          newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
-          levelDB._addLevelDBData($this.blockHeight, JSON.stringify(newBlock));
-
-        })
-        .catch(function (err) { });
+      return new Promise((resolve, reject) => {
+        $this.getBlock($this.blockHeight)
+          .then(function (currentBlock) {
+            currentBlock = JSON.parse(currentBlock);
+            newBlock.previousBlockHash = currentBlock.hash;
+            newBlock.time = new Date().getTime().toString().slice(0, -3);
+            newBlock.height = ++$this.blockHeight;
+            newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
+            levelDB._addLevelDBData($this.blockHeight, JSON.stringify(newBlock));
+            resolve("success");
+          })
+          .catch(function (err) { console.log(err) })
+      });
     }
     else {
-      newBlock.previousBlockHash = "";
-      newBlock.time = new Date().getTime().toString().slice(0, -3);
-      newBlock.height = ++this.blockHeight;
-      newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
-      levelDB._addLevelDBData(this.blockHeight, JSON.stringify(newBlock));
+      return new Promise((resolve, reject) => {
+        newBlock.previousBlockHash = "";
+        newBlock.time = new Date().getTime().toString().slice(0, -3);
+        newBlock.height = ++this.blockHeight;
+        newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
+        levelDB._addLevelDBData(this.blockHeight, JSON.stringify(newBlock));
+        resolve("success");
+      }).catch(function (err) { console.log(err) });
     }
   }
 
@@ -211,4 +220,5 @@ class Blockchain {
 
 
 
-module.exports = Blockchain; 
+module.exports.Blockchain = Blockchain;
+module.exports.Block = Block; 

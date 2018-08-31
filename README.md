@@ -1,40 +1,31 @@
 
 ## Express RESTful web API for private blockchain. 
-The API project include two endpoints:
+The API project file app.js include two endpoints:
 
 Get block
-
+```
+app.get('/block/:blockHeight', (req, res) => {...});
+```
 Post block
+```
+app.post('/block', (req, res) => {...});
+```
 
 ## For Testing Please Follow Below Steps, please do first "npm install"
 
-1: Enter a node session
+1: Run the API using the terminal
 ```
-node
+node app.js
 ```
-2: Load simpleChain.js file within node session
+2: Establish a get block request using below URL, replace the {blockHeight} with a valid number
 ```
-.load simpleChain.js
+http://localhost:8000/block/{blockHeight}
 ```
-3: Create New Blockchain
+3: Establish a post request using below URL, include JSON body to add new block
 ```
-let blockchain = new Blockchain();
+http://localhost:8000/block
+Request body: {"body":"block body contents"}
 ```
-4: Generate 10 blocks using generateBlocks()
-```
-blockchain.generateBlocks();
-```
-5: Validate blockchain
-```
-blockchain.validateChain();
-blockchain.printErrorLog();
-```
-6: Induce errors by changing block data using induceErrors()
-```
-blockchain.induceErrors([2,4,7])
-```
-7: Validate blockchain. The chain should now fail with blocks 2,4, and 7.
-```
-blockchain.validateChain();
-blockchain.printErrorLog();
-```
+
+
+
