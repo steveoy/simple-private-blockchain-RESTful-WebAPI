@@ -21,7 +21,7 @@ node app.js
 ```
 http://localhost:8000/block/{blockHeight}
 ```
-3: Establish a post request using below URL, include JSON body to add new block
+3: Establish a post request using below URL. Include JSON body to add new block
 ```
 http://localhost:8000/block
 Request body: {"body":"block body contents"}
