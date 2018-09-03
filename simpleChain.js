@@ -77,8 +77,10 @@ class Blockchain {
             newBlock.time = new Date().getTime().toString().slice(0, -3);
             newBlock.height = ++$this.blockHeight;
             newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
-            levelDB._addLevelDBData($this.blockHeight, JSON.stringify(newBlock));
-            resolve("success");
+            levelDB._addLevelDBData($this.blockHeight, JSON.stringify(newBlock)).then((result) => {
+              resolve(result);
+            }).catch(err => console.log(err));
+
           })
           .catch(function (err) { console.log(err) })
       });
@@ -89,8 +91,9 @@ class Blockchain {
         newBlock.time = new Date().getTime().toString().slice(0, -3);
         newBlock.height = ++this.blockHeight;
         newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
-        levelDB._addLevelDBData(this.blockHeight, JSON.stringify(newBlock));
-        resolve("success");
+        levelDB._addLevelDBData(this.blockHeight, JSON.stringify(newBlock)).then((result) => {
+          resolve(result);
+        }).catch(err => console.log(err));
       }).catch(function (err) { console.log(err) });
     }
   }

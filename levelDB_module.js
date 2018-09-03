@@ -11,9 +11,12 @@ var levelDB = {
     },
     //Adding new Block to DB
     _addLevelDBData: function (key, value) {
-        db.put(key, value, function (err) {
-            if (err) return console.log('Block ' + key + ' submission failed', err);
+        return new Promise((resolve, reject) => {
+            db.put(key, value, function (err) {
+                if (err) reject(err); else resolve("success");
+            })
         })
+
     },
 
     //Getting Block by key
